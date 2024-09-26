@@ -1,0 +1,16 @@
+<!-- src/app/pages/home/home.component.html -->
+<div *ngIf="loading$ | async; else content">
+  <p>Loading movies...</p>
+</div>
+
+<ng-template #content>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div *ngFor="let movie of movies$ | async" class="relative">
+      <img [src]="movie.thumbnail.regular.medium" alt="{{ movie.title }}" class="w-full h-40 object-cover rounded-lg">
+      <div class="absolute bottom-4 left-4">
+        <h3 class="text-xl">{{ movie.title }}</h3>
+        <p class="text-sm text-secondary">{{ movie.year }} • {{ movie.type }} • {{ movie.rating }}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
