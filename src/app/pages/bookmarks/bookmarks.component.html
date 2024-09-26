@@ -1,0 +1,19 @@
+<!-- src/app/pages/bookmarks/bookmarks.component.html -->
+
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-white mb-4">Bookmarks</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Bookmarked Movie Card -->
+    <div *ngFor="let bookmark of bookmarks$ | async" class="relative group">
+      <img [src]="bookmark.thumbnail.regular.large" alt="{{ bookmark.title }}" class="w-full h-56 object-cover rounded-lg">
+      <div class="absolute bottom-4 left-4">
+        <h3 class="text-lg font-semibold text-white">{{ bookmark.title }}</h3>
+        <p class="text-sm text-secondary">{{ bookmark.year }} • {{ bookmark.category }} • {{ bookmark.rating }}</p>
+      </div>
+      <!-- Remove Bookmark Icon -->
+      <button class="absolute top-4 right-4 p-2 bg-dark rounded-full hover:bg-primary">
+        <img src="assets/icon-bookmark-full.svg" alt="Remove Bookmark" class="w-6 h-6">
+      </button>
+    </div>
+  </div>
+</div>
