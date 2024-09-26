@@ -1,0 +1,130 @@
+<!-- src/app/components/sidebar/sidebar.component.html -->
+
+<!-- Desktop Sidebar -->
+<div
+  class="hidden md:flex m-10 rounded-xl justify-between items-center h-[90%] w-32 bg-dark text-white py-4 fixed top-0 left-0 flex-col space-y-4"
+>
+  <!-- Logo -->
+  <div>
+    <div class="mb-8">
+      <img src="assets/logo.svg" alt="Logo" class="w-12 mx-auto" />
+    </div>
+    <!-- Navigation Links -->
+    <ul class="space-y-6 hover:text-primary">
+      <li>
+        <a
+          routerLink="/home"
+          class="flex items-center space-x-2 "
+        >
+          <img src="assets/icon-nav-home.svg" alt="Home Icon" class="hover:text-primary w-6 h-6" />
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/movies"
+          class="flex items-center space-x-2 "
+        >
+          <img
+            src="assets/icon-nav-movies.svg"
+            alt="Movies Icon"
+            class="w-6 h-6 hover:text-primary"
+          />
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/tv-series"
+          class="flex items-center space-x-2 hover:text-primary"
+        >
+          <img
+            src="assets/icon-nav-tv-series.svg"
+            alt="TV Series Icon"
+            class="w-6 h-6"
+          />
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/bookmarks"
+          class="flex items-center space-x-2 hover:text-primary"
+        >
+          <img
+            src="assets/icon-nav-bookmark.svg"
+            alt="Bookmarks Icon"
+            class="w-6 h-6"
+          />
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- User Profile Image -->
+  <div class="mt-auto">
+    <img
+      src="assets/image-avatar.png"
+      alt="User Profile"
+      class="w-12 h-12 rounded-full mx-auto"
+    />
+  </div>
+</div>
+
+<!-- Mobile Navbar (removed the toggle button) -->
+<div
+  class="flex md:hidden bg-dark text-white p-4 fixed top-0 left-0 right-0 flex-row justify-between items-center"
+>
+  <!-- Logo -->
+  <img src="assets/logo.svg" alt="Logo" class="w-8" />
+</div>
+
+<!-- Mobile Menu (hidden by default, removed toggle) -->
+<div
+  *ngIf="isMenuOpen"
+  class="md:hidden bg-dark text-white fixed top-12 left-0 right-0 p-4 z-10"
+>
+  <ul class="space-y-4">
+    <li>
+      <a
+        routerLink="/home"
+        class="flex items-center space-x-2 hover:text-primary"
+      >
+        <img src="assets/icon-nav-home.svg" alt="Home Icon" class="w-6 h-6" />
+      </a>
+    </li>
+    <li>
+      <a
+        routerLink="/movies"
+        class="flex items-center space-x-2 hover:text-primary"
+      >
+        <img
+          src="assets/icon-nav-movies.svg"
+          alt="Movies Icon"
+          class="w-6 h-6"
+        />
+      </a>
+    </li>
+    <li>
+      <a
+        routerLink="/tv-series"
+        class="flex items-center space-x-2 hover:text-primary"
+      >
+        <img
+          src="assets/icon-nav-tv-series.svg"
+          alt="TV Series Icon"
+          class="w-6 h-6"
+        />
+      </a>
+    </li>
+    <li>
+      <a
+        routerLink="/bookmarks"
+        class="flex items-center space-x-2 hover:text-primary"
+      >
+        <img
+          src="assets/icon-nav-bookmark.svg"
+          alt="Bookmarks Icon"
+          class="w-6 h-6"
+        />
+      </a>
+    </li>
+  </ul>
+</div>
