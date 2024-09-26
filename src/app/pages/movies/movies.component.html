@@ -1,0 +1,19 @@
+<!-- src/app/pages/movies/movies.component.html -->
+
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-white mb-4">Movies</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Movie Card -->
+    <div *ngFor="let movie of movies$ | async" class="relative group">
+      <img [src]="movie.thumbnail.regular.large" alt="{{ movie.title }}" class="w-full h-56 object-cover rounded-lg">
+      <div class="absolute bottom-4 left-4">
+        <h3 class="text-lg font-semibold text-white">{{ movie.title }}</h3>
+        <p class="text-sm text-secondary">{{ movie.year }} • {{ movie.category }} • {{ movie.rating }}</p>
+      </div>
+      <!-- Bookmark Icon -->
+      <button class="absolute top-4 right-4 p-2 bg-dark rounded-full hover:bg-primary">
+        <img src="assets/icon-bookmark-empty.svg" alt="Bookmark" class="w-6 h-6">
+      </button>
+    </div>
+  </div>
+</div>
