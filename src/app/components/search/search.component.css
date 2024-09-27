@@ -1,0 +1,13 @@
+/* src/app/components/search/search.component.css */
+
+input::placeholder {
+  color: #5a698f; /* Placeholder color */
+}
+
+input {
+  color: #ffffff; /* Input text color */
+}
+
+.text-primary {
+  color: #fc4747; /* Error message color */
+}

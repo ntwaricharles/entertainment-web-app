@@ -1,0 +1,12 @@
+<!-- src/app/components/search/search.component.html -->
+
+<div class="flex items-center w-full bg-dark p-3 rounded-md">
+  <img src="assets/icon-search.svg" alt="Search Icon" class="w-6 h-6 mr-3">
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    (input)="onSearch()"
+    [placeholder]="placeholderText"
+    class="w-full bg-transparent outline-none text-white placeholder-secondary"
+  />
+</div>

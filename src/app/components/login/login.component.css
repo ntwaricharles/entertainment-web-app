@@ -1,0 +1,17 @@
+/* src/app/components/login/login.component.css */
+
+.bg-dark {
+  background-color: #161D2F; /* Dark background color */
+}
+
+.text-primary {
+  color: #FC4747; /* Primary red color */
+}
+
+.focus\:outline-none:focus {
+  outline: none; /* Remove default focus outline */
+}
+
+.hover\:underline:hover {
+  text-decoration: underline; /* Underline text on hover */
+}
