@@ -1,16 +1,141 @@
 <!-- src/app/pages/home/home.component.html -->
-<div *ngIf="loading$ | async; else content">
-  <p>Loading movies...</p>
-</div>
 
-<ng-template #content>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div *ngFor="let movie of movies$ | async" class="relative">
-      <img [src]="movie.thumbnail.regular.medium" alt="{{ movie.title }}" class="w-full h-40 object-cover rounded-lg">
-      <div class="absolute bottom-4 left-4">
-        <h3 class="text-xl">{{ movie.title }}</h3>
-        <p class="text-sm text-secondary">{{ movie.year }} • {{ movie.type }} • {{ movie.rating }}</p>
+<app-sidebar></app-sidebar>
+<div>
+  <app-search [(searchQuery)]="searchQuery"></app-search>
+
+  <!-- Trending Section -->
+  <div *ngIf="trendingMovies$ | async as trendingMovies">
+    <div *ngIf="trendingMovies.length > 0">
+      <h2 class="text-2xl font-bold text-white mb-4">Trending</h2>
+      <div class="relative">
+        <!-- Wrapper for horizontal scroll -->
+        <div class="flex overflow-x-auto space-x-4 no-scrollbar pr-6">
+          <div
+            *ngFor="let movie of trendingMovies"
+            class="flex-shrink-0 w-2/5 relative group"
+          >
+            <!-- Bookmark Icon -->
+            <div
+              class="absolute top-4 right-4 p-2 bg-dark bg-opacity-50 rounded-full"
+            >
+              <img
+                [src]="
+                  movie.isBookmarked
+                    ? 'assets/icon-bookmark-full.svg'
+                    : 'assets/icon-bookmark-empty.svg'
+                "
+                alt="Bookmark Icon"
+                class="w-3 h-3"
+              />
+            </div>
+            <!-- Movie Thumbnail -->
+            <img
+              [src]="movie.thumbnail.regular.medium"
+              alt="{{ movie.title }}"
+              class="w-full h-60 object-cover rounded-lg"
+            />
+            <!-- Play Button Overlay (on hover) -->
+            <div
+              class="absolute inset-0 flex items-center justify-center bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <div
+                class="flex items-center bg-secondary py-2 px-3 rounded-full space-x-2"
+              >
+                <img
+                  src="assets/icon-play.svg"
+                  alt="Play Icon"
+                  class="w-8 h-8"
+                />
+                <span class="text-white text-lg font-bold">Play</span>
+              </div>
+            </div>
+            <!-- Movie Details -->
+            <div class="absolute bottom-4 left-4 text-white">
+              <h3 class="text-lg font-bold">{{ movie.title }}</h3>
+              <div class="flex items-center space-x-1 text-sm text-secondary">
+                <span>{{ movie.year }} •</span>
+                <img
+                  [src]="
+                    movie.category === 'Movie'
+                      ? 'assets/icon-category-movie.svg'
+                      : 'assets/icon-category-tv.svg'
+                  "
+                  alt="Category Icon"
+                  class="w-3 h-3"
+                />
+                <span>{{ movie.category }} • {{ movie.rating }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</ng-template>
+
+  <!-- Recommended Section -->
+  <div *ngIf="recommendedMovies$ | async as recommendedMovies">
+    <div *ngIf="recommendedMovies.length > 0">
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">
+        Recommended for you
+      </h2>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
+        <div
+          *ngFor="let movie of getFilteredMovies(recommendedMovies)"
+          class="relative group"
+        >
+          <!-- Bookmark Icon -->
+          <div
+            class="absolute top-4 right-4 p-2 bg-black bg-opacity-50 rounded-full"
+          >
+            <img
+              [src]="
+                movie.isBookmarked
+                  ? 'assets/icon-bookmark-full.svg'
+                  : 'assets/icon-bookmark-empty.svg'
+              "
+              alt="Bookmark Icon"
+              class="w-3 h-3"
+            />
+          </div>
+          <!-- Movie Thumbnail -->
+          <img
+            [src]="movie.thumbnail.regular.medium"
+            alt="{{ movie.title }}"
+            class="w-full h-40 object-cover rounded-lg"
+          />
+          <!-- Play Button Overlay (on hover) -->
+          <div
+            class="absolute inset-0 flex justify-center items-center bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            <div
+              class="flex items-center mt-[-4] bg-secondary rounded-full py-2 px-3 space-x-2"
+            >
+              <img src="assets/icon-play.svg" alt="Play Icon" class="w-8 h-8" />
+              <span class="text-white text-lg font-bold">Play</span>
+            </div>
+          </div>
+          <!-- Movie Details -->
+          <div class="mt-2 text-white">
+            <h3 class="text-xl">{{ movie.title }}</h3>
+            <div class="flex items-center space-x-1 text-sm text-secondary">
+              <span>{{ movie.year }} •</span>
+              <img
+                [src]="
+                  movie.category === 'Movie'
+                    ? 'assets/icon-category-movie.svg'
+                    : 'assets/icon-category-tv.svg'
+                "
+                alt="Category Icon"
+                class="w-3 h-3"
+              />
+              <span>{{ movie.category }} • {{ movie.rating }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
