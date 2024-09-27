@@ -14,18 +14,47 @@ import { MoviesComponent } from './pages/movies/movies.component';
 import { TVSeriesComponent } from './pages/tv-series/tv-series.component';
 import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchComponent } from './components/search/search.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { environment } from '../environments/environments';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthModule } from '@angular/fire/auth';
+import { AuthService } from './services/auth.service';
+import { SharedLayoutComponent } from './shared-layout/shared-layout/shared-layout.component';
+import { AuthLayoutComponent } from './shared-layout/auth-layout/auth-layout.component';
 
 @NgModule({
-  declarations: [AppComponent, SidebarComponent, HomeComponent, MoviesComponent, TVSeriesComponent, BookmarksComponent],
+  declarations: [
+    AppComponent,
+    SidebarComponent,
+    HomeComponent,
+    MoviesComponent,
+    TVSeriesComponent,
+    BookmarksComponent,
+    SearchComponent,
+    LoginComponent,
+    SignupComponent,
+    SharedLayoutComponent,
+    AuthLayoutComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AuthModule,
     StoreModule.forRoot({ movies: movieReducer }),
     EffectsModule.forRoot([MovieEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
-  providers: [],
+  providers: [AuthService,
+    
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
