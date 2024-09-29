@@ -21,10 +21,12 @@ import { SignupComponent } from './components/signup/signup.component';
 import { environment } from '../environments/environments';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AuthModule } from '@angular/fire/auth';
+import { AuthModule, getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { SharedLayoutComponent } from './shared-layout/shared-layout/shared-layout.component';
 import { AuthLayoutComponent } from './shared-layout/auth-layout/auth-layout.component';
+import { initializeApp } from 'firebase/app';
+import { provideFirebaseApp } from '@angular/fire/app';
 
 @NgModule({
   declarations: [
@@ -46,15 +48,14 @@ import { AuthLayoutComponent } from './shared-layout/auth-layout/auth-layout.com
     ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AuthModule,
+
     StoreModule.forRoot({ movies: movieReducer }),
     EffectsModule.forRoot([MovieEffects]),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
-  providers: [AuthService,
-    
-  ],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

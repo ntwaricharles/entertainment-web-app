@@ -1,17 +1,40 @@
 <!-- src/app/pages/bookmarks/bookmarks.component.html -->
 
 <div class="p-6">
+  <!-- Search Component Integration -->
+  <app-search [(searchQuery)]="searchQuery" (searchQueryChange)="onSearch($event)"></app-search>
+  
   <h2 class="text-2xl font-bold text-white mb-4">Bookmarks</h2>
+  
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Bookmarked Movie Card -->
-    <div *ngFor="let bookmark of bookmarks$ | async" class="relative group">
-      <img [src]="bookmark.thumbnail.regular.large" alt="{{ bookmark.title }}" class="w-full h-56 object-cover rounded-lg">
-      <div class="absolute bottom-4 left-4">
-        <h3 class="text-lg font-semibold text-white">{{ bookmark.title }}</h3>
-        <p class="text-sm text-secondary">{{ bookmark.year }} • {{ bookmark.category }} • {{ bookmark.rating }}</p>
+    <!-- Filtered Bookmarked Movie Card -->
+    <div *ngFor="let bookmark of filteredBookmarks$ | async" class="relative group transform transition-transform hover:scale-105">
+      <!-- Bookmarked Movie Image with Hover Effects -->
+      <div class="relative">
+        <img [src]="bookmark.thumbnail.regular.large" alt="{{ bookmark.title }}" class="w-full h-56 object-cover rounded-lg">
+        <!-- Play Button Overlay (on hover) -->
+        <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+          <div class="flex items-center space-x-2">
+            <img src="assets/icon-play.svg" alt="Play Icon" class="w-8 h-8">
+            <span class="text-white text-lg font-semibold">Play</span>
+          </div>
+        </div>
       </div>
+
+      <!-- Bookmarked Movie Details -->
+      <div class="mt-4 text-white">
+        <h3 class="text-lg font-semibold">{{ bookmark.title }}</h3>
+        <div class="flex items-center space-x-1 text-sm text-secondary mb-2">
+          <span>{{ bookmark.year }} •</span>
+          <img [src]="bookmark.category === 'Movie' ? 'assets/icon-category-movie.svg' : 'assets/icon-category-tv.svg'" alt="Category Icon" class="w-4 h-4">
+          <span>{{ bookmark.category }} • {{ bookmark.rating }}</span>
+        </div>
+        <!-- Description (if available) -->
+        <p class="text-sm text-gray-400" *ngIf="bookmark.description">{{ bookmark.description }}</p>
+      </div>
+
       <!-- Remove Bookmark Icon -->
-      <button class="absolute top-4 right-4 p-2 bg-dark bg-opacity-50 rounded-full">
+      <button (click)="removeBookmark(bookmark)" class="absolute top-4 right-4 p-2 bg-dark bg-opacity-50 rounded-full">
         <img src="assets/icon-bookmark-full.svg" alt="Remove Bookmark" class="w-3 h-3">
       </button>
     </div>

@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent, // Use Auth Layout for Login and Signup
     children: [
-      { path: 'login', component: LoginComponent }, // Default route to Login
+      { path: '', component: LoginComponent }, // Default route to Login
       { path: 'signup', component: SignupComponent },
     ],
   },

@@ -1,0 +1,26 @@
+/* src/app/pages/bookmarks/bookmarks.component.css */
+/* src/app/pages/tv-series/tv-series.component.css */
+
+.group:hover .opacity-0 {
+  opacity: 1; /* Show play button on hover */
+}
+
+.transition-opacity {
+  transition: opacity 0.3s ease; /* Smooth opacity transition */
+}
+
+.transition-transform {
+  transition: transform 0.3s ease; /* Smooth scaling transition */
+}
+
+.bg-dark {
+  background-color: #10141E; /* Dark background for bookmark icon */
+}
+
+.bg-opacity-50 {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}
+
+.text-secondary {
+  color: #5A698F; /* Secondary text color */
+}

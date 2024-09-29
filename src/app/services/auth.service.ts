@@ -1,11 +1,6 @@
 // src/app/services/auth.service.ts
-import { inject, Injectable } from '@angular/core';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth'; // Use AngularFireAuth
 import { from, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -14,8 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private loggedIn = false;
-  private firebaseAuth = inject(Auth);
-  private router = inject(Router);
+
+  constructor(private afAuth: AngularFireAuth, private router: Router) {} // Inject AngularFireAuth
 
   // Sign up with email, password, and username
   register(
@@ -23,15 +18,12 @@ export class AuthService {
     password: string,
     username: string
   ): Observable<void> {
-    const promise = createUserWithEmailAndPassword(
-      this.firebaseAuth,
-      email,
-      password
-    )
+    const promise = this.afAuth
+      .createUserWithEmailAndPassword(email, password)
       .then((response) => {
         this.loggedIn = true;
         // Update user profile with username
-        return updateProfile(response.user, { displayName: username });
+        return response.user?.updateProfile({ displayName: username });
       })
       .then(() => {
         this.router.navigate(['/login']); // Navigate to login after registration
@@ -46,11 +38,8 @@ export class AuthService {
 
   // Login with email and password
   login(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(
-      this.firebaseAuth,
-      email,
-      password
-    )
+    const promise = this.afAuth
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
         this.loggedIn = true;
         this.router.navigate(['/home']); // Navigate to home after login
@@ -70,7 +59,7 @@ export class AuthService {
 
   // Logout user
   logout(): void {
-    this.firebaseAuth.signOut().then(() => {
+    this.afAuth.signOut().then(() => {
       this.loggedIn = false;
       this.router.navigate(['/login']); // Navigate to login page after logout
     });

@@ -39,8 +39,9 @@
     <!-- Submit Button -->
     <button
       type="submit"
-      class="w-full py-2 bg-primary cursor-pointer text-white rounded mb-4"
+      class="w-full py-2 bg-primary cursor-pointer hover:bg-white hover:text-dark text-white rounded mb-4"
       [disabled]="signupForm.invalid"
+      onclick="onSignup()"
     >
       Sign Up
     </button>

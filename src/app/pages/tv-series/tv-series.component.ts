@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { selectAllMovies } from '../../store/movie.selector';
+import { Movie } from '../../models/movie.model'; 
 
 @Component({
   selector: 'app-tv-series',
@@ -10,10 +11,12 @@ import { selectAllMovies } from '../../store/movie.selector';
   styleUrls: ['./tv-series.component.css'],
 })
 export class TVSeriesComponent implements OnInit {
-  tvSeries$: Observable<any[]>;
+  tvSeries$: Observable<Movie[]>;
+  filteredTvSeries$: Observable<Movie[]>; 
+  searchQuery: string = '';
 
   constructor(private store: Store) {
-    // Filter movies that are TV Series
+    // Get all TV series
     this.tvSeries$ = this.store
       .select(selectAllMovies)
       .pipe(
@@ -21,7 +24,28 @@ export class TVSeriesComponent implements OnInit {
           movies.filter((movie) => movie.category === 'TV Series')
         )
       );
+
+    this.filteredTvSeries$ = this.tvSeries$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.filterTvSeries();
+  }
+
+  filterTvSeries() {
+    this.filteredTvSeries$ = this.tvSeries$.pipe(
+      map((tvSeries) =>
+        tvSeries.filter((series) =>
+          series.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+        )
+      )
+    );
+
+  }
+
+  // Update search query and filter TV series
+  onSearch(query: string) {
+    this.searchQuery = query;
+    this.filterTvSeries();
+  }
 }

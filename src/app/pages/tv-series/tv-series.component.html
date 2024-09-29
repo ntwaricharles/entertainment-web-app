@@ -1,18 +1,41 @@
 <!-- src/app/pages/tv-series/tv-series.component.html -->
 
 <div class="p-6">
+  <!-- Search Component Integration -->
+  <app-search [(searchQuery)]="searchQuery" (searchQueryChange)="onSearch($event)"></app-search>
+  
   <h2 class="text-2xl font-bold text-white mb-4">TV Series</h2>
+  
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- TV Series Card -->
-    <div *ngFor="let series of tvSeries$ | async" class="relative group">
-      <img [src]="series.thumbnail.regular.large" alt="{{ series.title }}" class="w-full h-56 object-cover rounded-lg">
-      <div class="absolute bottom-4 left-4">
-        <h3 class="text-lg font-semibold text-white">{{ series.title }}</h3>
-        <p class="text-sm text-secondary">{{ series.year }} • {{ series.category }} • {{ series.rating }}</p>
+    <!-- Filtered TV Series Card -->
+    <div *ngFor="let series of filteredTvSeries$ | async" class="relative group transform transition-transform hover:scale-105">
+      <!-- TV Series Image with Hover Effects -->
+      <div class="relative">
+        <img [src]="series.thumbnail.regular.large" alt="{{ series.title }}" class="w-full h-56 object-cover rounded-lg">
+        <!-- Play Button Overlay (on hover) -->
+        <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-25 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+          <div class="flex items-center space-x-2">
+            <img src="assets/icon-play.svg" alt="Play Icon" class="w-8 h-8">
+            <span class="text-white text-lg font-semibold">Play</span>
+          </div>
+        </div>
       </div>
+      
+      <!-- TV Series Details -->
+      <div class="mt-4 text-white">
+        <h3 class="text-lg font-semibold">{{ series.title }}</h3>
+        <div class="flex items-center space-x-1 text-sm text-secondary mb-2">
+          <span>{{ series.year }} •</span>
+          <img [src]="series.category === 'TV Series' ? 'assets/icon-category-tv.svg' : 'assets/icon-category-movie.svg'" alt="Category Icon" class="w-4 h-4">
+          <span>{{ series.category }} • {{ series.rating }}</span>
+        </div>
+        <!-- Description (if available) -->
+        <p class="text-sm text-gray-400" *ngIf="series.description">{{ series.description }}</p>
+      </div>
+
       <!-- Bookmark Icon -->
-      <button class="absolute top-4 right-4 p-2 bg-dark bg-opacity-50  rounded-full">
-        <img src="assets/icon-bookmark-empty.svg" alt="Bookmark" class="w-6 h-6">
+      <button class="absolute top-4 right-4 p-2 bg-dark bg-opacity-50 rounded-full">
+        <img src="assets/icon-bookmark-empty.svg" alt="Bookmark" class="w-3 h-3">
       </button>
     </div>
   </div>

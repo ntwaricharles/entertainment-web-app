@@ -25,13 +25,16 @@ export class SignupComponent {
   }
 
   onSignup() {
+    console.log('register called');
     if (this.signupForm.valid) {
       const { email, password } = this.signupForm.value;
+      console.log("register form is valid")
       this.authService
         .register(email, password, email.split('@')[0]) // Use email prefix as username
         .subscribe({
           next: () => {
             this.router.navigate(['/login']); // Navigate on successful signup
+            console.log("Successful login")
           },
           error: (error) => {
             this.errorMessage = error.message; // Handle error
