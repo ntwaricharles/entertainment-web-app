@@ -1,4 +1,3 @@
-// src/app/components/search/search.component.ts
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -8,14 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
-  @Input() searchQuery: string = ''; // For two-way binding with parent components
-  @Output() searchQueryChange = new EventEmitter<string>(); // Event emitter for two-way binding
-  placeholderText: string = 'Search for movies and TV series'; // Default placeholder
+  @Input() searchQuery: string = '';
+  @Output() searchQueryChange = new EventEmitter<string>(); 
+  placeholderText: string = 'Search for movies and TV series';
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Set the placeholder based on the current route
     this.router.events.subscribe(() => {
       const route = this.activatedRoute.snapshot.routeConfig?.path;
       switch (route) {
@@ -34,8 +32,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  // Emit the search query to parent component when input changes
   onSearch() {
-    this.searchQueryChange.emit(this.searchQuery); // Emit the searchQuery value
+    this.searchQueryChange.emit(this.searchQuery);
   }
 }

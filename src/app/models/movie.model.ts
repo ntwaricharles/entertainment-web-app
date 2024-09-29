@@ -10,5 +10,5 @@ export interface Movie {
   rating: string; 
   isBookmarked: boolean; 
   isTrending: boolean; 
-  description:string
+  // description:string
 }

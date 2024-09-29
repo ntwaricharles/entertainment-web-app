@@ -1,6 +1,5 @@
-// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; // Use AngularFireAuth
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { from, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -10,9 +9,8 @@ import { Router } from '@angular/router';
 export class AuthService {
   private loggedIn = false;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {} // Inject AngularFireAuth
+  constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
-  // Sign up with email, password, and username
   register(
     email: string,
     password: string,
@@ -22,11 +20,10 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
         this.loggedIn = true;
-        // Update user profile with username
         return response.user?.updateProfile({ displayName: username });
       })
       .then(() => {
-        this.router.navigate(['/login']); // Navigate to login after registration
+        this.router.navigate(['/login']);
       })
       .catch((error) => {
         console.error('Error during sign-up:', error);
@@ -36,13 +33,12 @@ export class AuthService {
     return from(promise);
   }
 
-  // Login with email and password
   login(email: string, password: string): Observable<void> {
     const promise = this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         this.loggedIn = true;
-        this.router.navigate(['/home']); // Navigate to home after login
+        this.router.navigate(['/home']);
       })
       .catch((error) => {
         console.error('Error during login:', error);
@@ -52,16 +48,14 @@ export class AuthService {
     return from(promise);
   }
 
-  // Check if user is authenticated
   isAuthenticated(): boolean {
     return this.loggedIn;
   }
 
-  // Logout user
   logout(): void {
     this.afAuth.signOut().then(() => {
       this.loggedIn = false;
-      this.router.navigate(['/login']); // Navigate to login page after logout
+      this.router.navigate(['/login']);
     });
   }
 }

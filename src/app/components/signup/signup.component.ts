@@ -1,4 +1,3 @@
-// src/app/components/signup/signup.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -18,26 +17,35 @@ export class SignupComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    this.signupForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
+    this.signupForm = this.fb.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      },
+      { validator: this.passwordMatchValidator }
+    );
   }
 
+  // Custom validator to check if passwords match
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
+  }
+
+  // Signup function
   onSignup() {
-    console.log('register called');
     if (this.signupForm.valid) {
       const { email, password } = this.signupForm.value;
-      console.log("register form is valid")
       this.authService
-        .register(email, password, email.split('@')[0]) // Use email prefix as username
+        .register(email, password, email.split('@')[0])
         .subscribe({
           next: () => {
-            this.router.navigate(['/login']); // Navigate on successful signup
-            console.log("Successful login")
+            this.router.navigate(['/login']); 
           },
           error: (error) => {
-            this.errorMessage = error.message; // Handle error
+            this.errorMessage = error.message;
           },
         });
     }

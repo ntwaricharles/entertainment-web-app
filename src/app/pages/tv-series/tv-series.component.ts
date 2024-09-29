@@ -1,4 +1,3 @@
-// src/app/pages/tv-series/tv-series.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
@@ -16,7 +15,6 @@ export class TVSeriesComponent implements OnInit {
   searchQuery: string = '';
 
   constructor(private store: Store) {
-    // Get all TV series
     this.tvSeries$ = this.store
       .select(selectAllMovies)
       .pipe(
@@ -42,8 +40,6 @@ export class TVSeriesComponent implements OnInit {
     );
 
   }
-
-  // Update search query and filter TV series
   onSearch(query: string) {
     this.searchQuery = query;
     this.filterTvSeries();

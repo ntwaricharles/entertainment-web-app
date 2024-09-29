@@ -1,4 +1,3 @@
-// src/app/components/login/login.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -24,16 +23,16 @@ export class LoginComponent {
     });
   }
 
-  // Login user
+  // Login function
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
         next: () => {
-          this.router.navigate(['/home']); // Navigate on successful login
+          this.router.navigate(['/home']); 
         },
         error: (error) => {
-          this.errorMessage = error.message; // Handle error
+          this.errorMessage = error.message;
         },
       });
     }
