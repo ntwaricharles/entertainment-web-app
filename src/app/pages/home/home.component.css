@@ -1,0 +1,32 @@
+.text-secondary {
+  color: #5A698F;
+}
+
+.text-white {
+  color: #FFFFFF;
+}
+
+h2 {
+  color: #FFFFFF;
+}
+
+.relative {
+  position: relative;
+}
+
+img {
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; 
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
